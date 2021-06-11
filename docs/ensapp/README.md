@@ -7,4 +7,4 @@ pour gérer les commandes et produits.
 
 Tout les jours plusieurs tâches (dorénavant apellées 'jobs') tournent en asynchrone pour déposer
 les commandes dans le serveur SFTP d'ENSOVO, pour mettre à jour les stocks des différents produits
-dans shopify ou recevoir le fichier de traitement de commandes par ENSOVO.
+dans shopify et recevoir le fichier de traitement de commandes par ENSOVO.
