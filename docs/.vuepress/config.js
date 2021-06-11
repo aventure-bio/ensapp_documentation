@@ -1,6 +1,6 @@
 module.exports = {
-  title: 'Documentation Aventure Bio',
-  description: 'Aventure Bio documentation',
+  title: 'Documentation ENSAPP',
+  description: "Documentation tech pour l'application ENSAPP",
   plugins: ['@vuepress/medium-zoom'],
   themeConfig: {
     nav: [
@@ -11,8 +11,10 @@ module.exports = {
       '/ensapp/': [
         '',
         'Historique',
-        'Ajouter un shop',
-        'Installation'
+        'Ajouter un magasin',
+        'Installation',
+        'database',
+        'User_stories'
       ]
     }
   }
