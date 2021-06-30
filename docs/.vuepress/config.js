@@ -14,6 +14,7 @@ module.exports = {
         'Ajouter un magasin',
         'Installation',
         'database',
+        'order',
         'User_stories'
       ]
     }
