@@ -1,4 +1,4 @@
-# Ajouter un shop
+# Ajouter un magasin
 
 ## Non D2C
 1 - Se rendre sur https://shopify-magistor-connector.herokuapp.com/
