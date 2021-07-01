@@ -14,7 +14,8 @@ module.exports = {
         'add_new_store',
         'installation',
         'database',
-        'user_stories'
+        'user_stories',
+        'order',
       ]
     }
   }
