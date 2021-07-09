@@ -56,3 +56,37 @@ Si l'article a été 100% remboursé (quantité total = quantité annulée), son
 
 ## Transmission des commandes d'Ensapp vers Magistor
 
+La synchronisation des commandes s'effectue avec la tache `shopify_to_magistor:transmit_orders_to_magistor` qui peut être déclenchée de 2 manières :
+- Toutes les 10 minutes;
+- A des créneaux horaires précis.
+
+### Toutes les 10 minutes
+
+Si le magasin souhaite transmettre les commandes de manière continue et qu'il coche l'option _Envoyer automatiquement les commandes à Magistor_ (`automatically_send_orders_to_magistor`), les commandes seront transmises à Magistor toutes les 10 minutes si elles sont transmissibles.
+
+### A des créneaux horaires précis
+
+Si le magasin ne souhaite pas cocher l'option _Envoyer automatiquement les commandes à Magistor_, il a la possibilité de choisir *N* créneaux horaires (`order_sync_times`) différents pour le déclenchement de la synchronisation des commandes.
+
+::: warning Attention
+Un magasin ne peut pas cocher l'option _Envoyer automatiquement les commandes à Magistor_ **ET** par ailleurs choisir des créneaux horaires précis pour la synchronisation.
+:::
+
+En pratique, c'est la même tâche `shopify_to_magistor:transmit_orders_to_magistor` qui est déclenchée automatiquement toutes les 10 minutes mais, dans ce cas, elle vérifie en amont si :
+- l'heure actuelle (au moment où tourne la tache) est postérieure au créneau horaire choisi pour le magasin 
+- le déclenchement n'a pas encore été fait pour le créneau horaires en question.
+Dans ce cas où ces deux conditions sont vraies, les commandes sont transmises à Magistor. Et ainsi de suite pour tous les créneaux horaires choisis.
+
+Le magasin peut ajouter autant de créneaux horaires qu'il le souhaite.
+
+::: details Infos complémentaires pour les développeurs 
+Côté base de données, la relation entre la table `shops` et la table `order_sync_times` est une relation N:1. 
+Un magasin peut avoir *N* heures de synchronisation mais une heure de synchronisation peut seulement appartenir à un magasin.
+
+Pour savoir si la synchronisation a déjà eu lieu pour un créneau horaire choisi, on utilise une troisième table `order_sync_time_sent_dates` qui conserve la **date** de la synchronisation.
+La relation entre la table `order_sync_times` et `order_sync_time_sent_dates` est de N:1. Une heure de synchronisation peut avoir *N* dates d'envoi. Mais une date d'envoi peut seulement appartenir à une heure de synchronisation.
+
+<p align="center">
+  <img :src="$withBase('/images/ea_order_sync_times.png')">
+</p>
+:::
