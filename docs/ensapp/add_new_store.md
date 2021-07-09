@@ -47,7 +47,7 @@ Ce processus est très spécifique à Aventure Bio. Aventure Bio gére des magas
   * Gérer les DLV par défaut: `false`
   * Gérer les lots par défaut: `false`
   * Envoyer un email avec les changements d'inventaire: `false`
-  * Donnée à utiliser comme code produit: `Code Barre`
+  * Donnée à utiliser comme code produit: `SKU`
   * Transmettre à Magistor les commandes non payées: `false`
   * Transmettre le fichier de stock mensuellement à l'entreprise: `false`
   * Valider les commandes avant de les transmettre à Magistor: `false`
