@@ -1,10 +1,16 @@
-# Ensapp 📦
+# Contexte
 
-Cette application a été dévelopée comme connecteur entre Shopify et le WMS Magistor d'Ensovo
-pour gérer les commandes et produits.
+L'application ENSAPP a pour but de **connecter des boutiques Shopify et Magistor** (WMS d'Ensovo).
+
+Elle permet entre autres de :
+- transmettre à Magistor les nouvelles commandes Shopify à expédier
+- communiquer à Shopify les informations d'expédition et les quantités expédiées par Magistor
+- transmettre à Magistor l'inventaire des produits en vente sur Shopify
+- mettre à jour les stocks de produits dans Shopify à partir des stocks réels dans Magistor.
+
+Les flux d'informations transitent entre les deux interfaces via Ensapp et le dépôt de fichiers dans un serveur SFTP dédié à chaque magasin.
 
 ![](/images/summary_schema.png)
 
-Tout les jours plusieurs tâches (dorénavant apellées 'jobs') tournent en asynchrone pour déposer
-les commandes dans le serveur SFTP d'ENSOVO, pour mettre à jour les stocks des différents produits
-dans shopify et recevoir le fichier de traitement de commandes par ENSOVO.
+Quotidiennement et plusieurs fois par jour, de nombreux process (aussi appelés 'jobs') fonctionnent de manière synchrone et asynchrone pour réaliser toutes ces tâches.
+
