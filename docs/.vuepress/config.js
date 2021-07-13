@@ -10,11 +10,9 @@ module.exports = {
     sidebar: {
       '/ensapp/': [
         '',
-        'history',
-        'add_new_store',
         'installation',
         'database',
-        'user_stories',
+        'product',
         'order',
       ]
     }
