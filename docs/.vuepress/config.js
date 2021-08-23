@@ -14,6 +14,7 @@ module.exports = {
         'database',
         'product',
         'order',
+        'errors'
       ]
     }
   }
