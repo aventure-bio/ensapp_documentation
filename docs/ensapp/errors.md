@@ -44,14 +44,18 @@ puts order.shipping_receipt.download # CRP = shipping_receipt
 ```
 :::
 
+::: details Infos pour les développeurs - Traiter manuellement la commande
+Pour qu'une commande soit traitée comme expédiée dans Ensapp, lancer la tache `heroku run rake fulfill_blocked_orders\['AXXXX']` (remplacer "AXXXX" par le numéro de la commande)
+:::
+
 #### Problème avec le package_data
 
 :question: Problème : une anomalie a eu lieu pendant le traitement des lignes du CRP par Ensapp
 
 :heavy_check_mark: Solution : 
 
-- si dans les minutes qui suivent, les informations du CRP ont bien été transmises à Shopify, le problème s'est résolu "de lui même"
-- si le probleme persiste avec de nouveaux messages d'erreur et qu'aucune information n'est transmise à Shopify, investiguer le CRP reçu 
+- si dans les minutes qui suivent, les informations du CRP ont bien été transmises à Shopify MAIS la commande reste "*sent_to_magistor*" dans Ensapp, traiter manuellement la commande (*[infos pour les développeurs](https://documentation-ensapp.netlify.app/ensapp/errors.html#expedition-traitement-de-la-commande-via-crp)*) et ajouter la balise/tag "*ensovo_fulfilled*" dans Shopify
+- si le probleme persiste avec de nouveaux messages d'erreur et qu'aucune information n'est transmise à Shopify, investiguer le CRP reçu
 
 #### Line item '103XXXXX' is already fulfilled
 
@@ -70,7 +74,7 @@ order = Order.find_by_name('AXXXX') # récupérer la commande concernée
 line_item = order.line_items.find_by(shopify_id: '103XXXXX') # récupérer l'article en utilisant l'ID du LineItem mentionné dans l'email d'erreur
 sku = line_item.variant.sku # trouver le SKU de l'article
 ```
-Récupérer le CRP comme indiqué en note plus haut *[infos pour les développeurs](http://localhost:8080/ensapp/errors.html#objet-ensapp-erreur-xxx-le-traitement-de-la-commande-axxxx-ne-s-est-pas-fait-correctement)*.
+Récupérer le CRP comme indiqué en note plus haut *[infos pour les développeurs](https://documentation-ensapp.netlify.app/ensapp/errors.html#objet-ensapp-erreur-xxx-le-traitement-de-la-commande-axxxx-ne-s-est-pas-fait-correctement)*.
 
 Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concerné. La quantité correspond au nombre mentionné juste après le SKU (à sa droite).
 :::
