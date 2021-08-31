@@ -1,0 +1,86 @@
+# Erreurs / Anomalies
+
+## Import des commandes Shopify dans Ensapp
+
+#### OBJET: *[ENSAPP-Erreur] XXX - La commande AXXXX ne s'est pas enregistrée correctement*
+
+____
+
+::: details Infos pour les développeurs - Vérifier la création de la commande
+Si la commande est bien créée dans Ensapp, elle peut être trouvée en console en saisissant `order = Order.find_by_name('AXXXX')`
+:::
+
+#### Certaines données ne sont pas disponibles (hors shopify_id)
+
+:question: Problème : Shopify a transmis à Ensapp des données manquantes
+
+:heavy_check_mark: Solution : 
+- si dans les minutes qui suivent, la commande a bien été créée correctement dans Ensapp, le problème s'est résolu "de lui même" (Shopify a regénéré correctement la transmission d'information)
+- si le probleme persiste avec de nouveaux messages d'erreur et que la commande ne parvient à se créer dans Ensapp :
+  - investiguer la commande créée dans Shopify pour s'assurer qu'elle n'est pas d'anomalie
+  - discuter avec l'équipe Business si besoin pour mettre à jour les données manquantes si possible directement dans Shopify (pour générer une nouvelle tentative de création)
+
+#### Shopify_id n'est pas disponible
+
+:question: Problème : Shopify a transmis à Ensapp des données manquantes => anomalie de fonctionnement de Shopify
+
+:heavy_check_mark: Solution : 
+- dans les minutes qui suivent, la commande devrait s'être créée correctement dans Ensapp. Le problème s'est résolu "de lui même" (Shopify a regénéré correctement la transmission d'information)
+
+
+## Expédition / Traitement de la commande via CRP
+
+#### OBJET: *[ENSAPP-Erreur] XXX - Le traitement de la commande AXXXX ne s'est pas fait correctement*
+
+____
+
+::: details Infos pour les développeurs - Récupérer le CRP
+Le CRP transmis par Ensovo peut-être récupéré de plusieurs manières :
+- en pièce-joint de l'email d'erreur
+- en console / terminal en saisissant :
+```
+order = Order.find_by_name('AXXXX')
+puts order.shipping_receipt.download # CRP = shipping_receipt
+```
+:::
+
+::: details Infos pour les développeurs - Traiter manuellement la commande
+Pour qu'une commande soit traitée comme expédiée dans Ensapp, lancer la tache `heroku run rake fulfill_blocked_orders\['AXXXX']` (remplacer "AXXXX" par le numéro de la commande)
+:::
+
+#### Problème avec le package_data
+
+:question: Problème : une anomalie a eu lieu pendant le traitement des lignes du CRP par Ensapp
+
+:heavy_check_mark: Solution : 
+
+- si dans les minutes qui suivent, les informations du CRP ont bien été transmises à Shopify MAIS la commande reste "*sent_to_magistor*" dans Ensapp, traiter manuellement la commande (*[infos pour les développeurs](https://documentation-ensapp.netlify.app/ensapp/errors.html#expedition-traitement-de-la-commande-via-crp)*) et ajouter la balise/tag "*ensovo_fulfilled*" dans Shopify
+- si le probleme persiste avec de nouveaux messages d'erreur et qu'aucune information n'est transmise à Shopify, investiguer le CRP reçu
+
+#### Line item '103XXXXX' is already fulfilled
+
+:question: Problème : la quantité indiquée comme expédiée par Ensovo ne correspont pas avec la quantité à traiter dans Shopify
+
+:heavy_check_mark: Solution : 
+
+- vérifier les quantités à traiter dans Shopify (dans les articles "à traiter" et "supprimés")
+- investiguer le CRP reçu et les quantités indiquées comme expédiées par Ensovo
+
+
+::: details Infos pour les développeurs - Analyser le CRP
+Le CRP transmis par Ensovo peut-être analysé en console en saisissant les lignes :
+```
+order = Order.find_by_name('AXXXX') # récupérer la commande concernée
+line_item = order.line_items.find_by(shopify_id: '103XXXXX') # récupérer l'article en utilisant l'ID du LineItem mentionné dans l'email d'erreur
+sku = line_item.variant.sku # trouver le SKU de l'article
+```
+Récupérer le CRP comme indiqué en note plus haut *[infos pour les développeurs](https://documentation-ensapp.netlify.app/ensapp/errors.html#objet-ensapp-erreur-xxx-le-traitement-de-la-commande-axxxx-ne-s-est-pas-fait-correctement)*.
+
+Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concerné. La quantité correspond au nombre mentionné juste après le SKU (à sa droite).
+:::
+
+- si le CRP était erroné, modifier le CRP avec les bonnes informations (validées par l'équipe Business) et redéposer le fichier corrigé sur le serveur SFTP avec une copie vide de ce fichier ayant l'extension .bal (ex: 'CRP...0001.dat' + 'CRP...0001.bal')
+- si les quantités ont été supprimées à tord dans Shopify, voir si l'équipe Business peut les rajouter manuellement à la commande Shopify et relancer le traitement du CRP (comme indiqué au dessus) en modifiant ses données si besoin
+
+
+
