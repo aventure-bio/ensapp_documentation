@@ -14,7 +14,7 @@ Si la commande est bien créée dans Ensapp, elle peut être trouvée en console
 
 :question: Problème : Shopify a transmis à Ensapp des données manquantes
 
-:heavy_check_mark: Solution : 
+:heavy_check_mark: Solution (imad): 
 - si dans les minutes qui suivent, la commande a bien été créée correctement dans Ensapp, le problème s'est résolu "de lui même" (Shopify a regénéré correctement la transmission d'information)
 - si le probleme persiste avec de nouveaux messages d'erreur et que la commande ne parvient à se créer dans Ensapp :
   - investiguer la commande créée dans Shopify pour s'assurer qu'elle n'est pas d'anomalie
