@@ -71,6 +71,10 @@ Pour qu'une commande soit traitée comme expédiée dans Ensapp, lancer la tache
 shop = Shop.find(....)
 shop.shipping_methods.map(&:code) # vérifier si le mode de livraison est déjà rattaché au magasin
 shipping_method = ShippingMethod.find_by(code: ....) # rechercher le code de livraison utilisé dans le CRP (ex: COLISSIMO_ABIO)
+
+# ou si besoin, créer le mode de livraison
+shipping_method = ShippingMethod.create(name: ...., code: ...., ...)
+
 shop.shipping_methods << shipping_method # ajouter le mode de livraison au magasin
 ```
 :::
