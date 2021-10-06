@@ -10,7 +10,7 @@ ____
 Si la commande est bien créée dans Ensapp, elle peut être trouvée en console en saisissant `order = Order.find_by_name('AXXXX')`
 :::
 
-#### Certaines données ne sont pas disponibles (hors shopify_id)
+#### ERREUR "Certaines données ne sont pas disponibles" (hors shopify_id)
 
 :question: Problème : Shopify a transmis à Ensapp des données manquantes
 
@@ -20,7 +20,7 @@ Si la commande est bien créée dans Ensapp, elle peut être trouvée en console
   - investiguer la commande créée dans Shopify pour s'assurer qu'elle n'est pas d'anomalie
   - discuter avec l'équipe Business si besoin pour mettre à jour les données manquantes si possible directement dans Shopify (pour générer une nouvelle tentative de création)
 
-#### Shopify_id n'est pas disponible
+#### ERREUR "Shopify_id n'est pas disponible"
 
 :question: Problème : Shopify a transmis à Ensapp des données manquantes => anomalie de fonctionnement de Shopify
 
@@ -48,7 +48,7 @@ puts order.shipping_receipt.download # CRP = shipping_receipt
 Pour qu'une commande soit traitée comme expédiée dans Ensapp, lancer la tache `heroku run rake fulfill_blocked_orders\['AXXXX']` (remplacer "AXXXX" par le numéro de la commande)
 :::
 
-#### Problème avec le package_data
+#### ERREUR "Problème avec le package_data"
 
 :question: Problème : une anomalie a eu lieu pendant le traitement des lignes du CRP par Ensapp
 
@@ -57,7 +57,29 @@ Pour qu'une commande soit traitée comme expédiée dans Ensapp, lancer la tache
 - si dans les minutes qui suivent, les informations du CRP ont bien été transmises à Shopify MAIS la commande reste "*sent_to_magistor*" dans Ensapp, traiter manuellement la commande (*[infos pour les développeurs](https://documentation-ensapp.netlify.app/ensapp/errors.html#expedition-traitement-de-la-commande-via-crp)*) et ajouter la balise/tag "*ensovo_fulfilled*" dans Shopify
 - si le probleme persiste avec de nouveaux messages d'erreur et qu'aucune information n'est transmise à Shopify, investiguer le CRP reçu
 
-#### Line item '103XXXXX' is already fulfilled
+#### ERREUR "Le lien du suivi n'est pas présent"
+
+:question: Problème : le lien de suivi n'est pas présent ou le mode de livraison n'est pas connu pour ce magasin
+
+:heavy_check_mark: Solution : 
+
+- vérifier si le CRP contient un numéro de suivi (correpond à l'avant dernière série de chiffres)
+- vérifier si le magasin a bien ce mode de livraison rattaché
+
+::: details Infos pour les développeurs - Rattacher un mode de livraison à un magasin
+```
+shop = Shop.find(....)
+shop.shipping_methods.map(&:code) # vérifier si le mode de livraison est déjà rattaché au magasin
+shipping_method = ShippingMethod.find_by(code: ....) # rechercher le code de livraison utilisé dans le CRP (ex: COLISSIMO_ABIO)
+
+# ou si besoin, créer le mode de livraison
+shipping_method = ShippingMethod.create(name: ...., code: ...., ...)
+
+shop.shipping_methods << shipping_method # ajouter le mode de livraison au magasin
+```
+:::
+
+#### ERREUR "Line item '103XXXXX' is already fulfilled"
 
 :question: Problème : la quantité indiquée comme expédiée par Ensovo ne correspont pas avec la quantité à traiter dans Shopify
 
