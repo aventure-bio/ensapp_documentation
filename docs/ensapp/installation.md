@@ -80,12 +80,12 @@ Pour ces magasins D2C, les flux d'information sur la gestion des commandes sont 
 
 > Première méthode de livraison
 > - Nom: `livraison à domicile (dpd)`
-> - Code Transporteur: `DPD_ABIO`
+> - Code Transporteur: `AB_DPD`
 > - Template de l'url de suivi: `https://www.dpd.fr/trace/[TRACKING_NUMBER]`
 
 > Deuxième méthode de livraison
 > - Nom: `Expédition gratuite`
-> - Code Transporteur: `DPD_ABIO`
+> - Code Transporteur: `AB_DPD`
 > - Template de l'url de suivi: `https://www.dpd.fr/trace/[TRACKING_NUMBER]`
 
 ::: details * Infos pour les développeurs
