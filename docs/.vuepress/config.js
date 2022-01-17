@@ -13,7 +13,8 @@ module.exports = {
         'installation',
         'database',
         'product',
-        'order',
+        'client_order',
+        'supplier_order',
         'errors'
       ]
     }
