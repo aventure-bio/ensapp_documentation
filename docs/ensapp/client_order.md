@@ -1,4 +1,4 @@
-# Commandes
+# Commandes clients
 
 ## Import des commandes Shopify dans Ensapp
 
@@ -108,6 +108,16 @@ Une commande est considérée transmissible lorsqu'elle :
 Lorsqu'une commande est expédiée/traitée par Ensovo, un fichier de traitement est automatiquement déposé par Magistor sur le serveur SFTP du magasin concerné.
 
 Ce fichier peut être soit un CRE soit un CRP (avec une ligne par produit dans la commande).
+
+Les **magasins utilisant les CRP** sont :
+- Aventure Bio et ses D2C classiques (hors Ma Vie Sans Gluten)*
+
+Ceux **utilisant les CRE** sont :
+- Ma Vie Sans Gluten (MVSG)
+- Anoralp
+- Paos
+
+*historiquement, le magasin Aventure Bio a été géré en CRP pour permettre d’avoir le détail des produits traités dans chaque commande et être au plus près des stocks réels (en quasi temps réel). Le fait que les D2C classiques (hors MVSG) gèrent leur stock à travers Aventure Bio, les équipes ont choisit de mettre les D2C aussi en CRP pour permettre de calculer correctement les stocks en temps réel.
 
 ### CRE 
 
