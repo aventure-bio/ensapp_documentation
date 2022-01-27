@@ -104,5 +104,24 @@ Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concern�
 - si le CRP était erroné, modifier le CRP avec les bonnes informations (validées par l'équipe Business) et redéposer le fichier corrigé sur le serveur SFTP avec une copie vide de ce fichier ayant l'extension .bal (ex: 'CRP...0001.dat' + 'CRP...0001.bal')
 - si les quantités ont été supprimées à tord dans Shopify, voir si l'équipe Business peut les rajouter manuellement à la commande Shopify et relancer le traitement du CRP (comme indiqué au dessus) en modifiant ses données si besoin
 
+#### ERREUR "Le traitement de la commande XXXX ne s'est pas fait correctement"
 
+:question: Problème : Parfois le CRP envoyé peut diviser une ligne de la commande en deux lignes dans le CRP ce qui cause un problème.
 
+:heavy_check_mark: Solution : 
+
+- Première chose à faire est de vérifier dans la DB si la commande à bien le statut `sent_to_magistor`
+- Deuxième chose à faire est de controller si les infos du CRP sont correctes. Il faut donc ouvrir le CRP en pièce jointe du mail et ouvrir la commande sur shopify. En suite il faut comparer les quantités.
+![](/images/shopify_order_li.png)
+![](/images/CRP_quantities.png)
+
+**NOTE: Si la commande est un bundle c’est normal que la ligne du panier (dans l’exemple la première ligne) n’apparaisse pas dans le CRP**
+
+- Si tout est OK avec le CRP on peut donc traiter la commande sur Shopify en ajoutant le numéro de suivi. L’avant dernière collonne dans le CRP. Dans l’exemple `250059803396849149`
+
+- Toujours sur Shopify ajouter le tag `ensovo_fulfilled` sur la commande
+
+::: details Infos pour les développeurs - Lancer rake task
+Lancer la rake task `heroku run rake fulfill_blocked_orders\['AXXXX']` en console. AXXXX etant le número de la commande. Pour la commande utilisé au dessus comme exemple la rake serait: 
+`heroku run rake fulfill_blocked_orders\['BD1048']`
+:::
