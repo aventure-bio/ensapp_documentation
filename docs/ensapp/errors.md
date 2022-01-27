@@ -106,7 +106,7 @@ Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concern�
 
 #### ERREUR "Fulfilled quantity for line item 'XXXX' must be less than or equal to the fulfillable line item quantity X"
 
-:question: Problème : Parfois le CRP envoyé peut diviser une ligne de la commande en deux lignes dans le CRP ce qui cause un problème.
+:question: Problème :  Lorsqu'une commande a plusieurs prix différents pour la même référence produit (ex: SKU 1234 au prix de 2,5 euros + SKU 1234 gratuit/offert), Shopify va créer la commande avec 2 articles différents pour le même SKU. Ensapp gère pour le moment mal ce cas de figure lors du traitement de l'expédition.
 
 :heavy_check_mark: Solution : 
 
@@ -115,13 +115,13 @@ Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concern�
 ![](/images/shopify_order_li.png)
 ![](/images/CRP_quantities.png)
 
-**NOTE: Si la commande est un bundle c’est normal que la ligne du panier (dans l’exemple la première ligne) n’apparaisse pas dans le CRP**
+**NOTE: Si la commande contient un panier/bundle, c’est normal que la ligne du panier (dans l’exemple la première ligne) n’apparaisse pas dans le CRP**
 
-- Si tout est OK avec le CRP on peut donc traiter la commande sur Shopify en ajoutant le numéro de suivi. L’avant dernière collonne dans le CRP. Dans l’exemple `250059803396849149`
+- Si tout est OK avec le CRP, traiter la commande sur Shopify en ajoutant le numéro de suivi. L’avant dernière collonne dans le CRP. Dans l’exemple `250059803396849149`
 
 - Toujours sur Shopify ajouter le tag `ensovo_fulfilled` sur la commande
 
 ::: details Infos pour les développeurs - Lancer rake task
-Lancer la rake task `heroku run rake fulfill_blocked_orders\['AXXXX']` en console. AXXXX etant le número de la commande. Pour la commande utilisé au dessus comme exemple la rake serait: 
+Lancer la rake task `heroku run rake fulfill_blocked_orders\['AXXXX']` en console. AXXXX etant le numéro de la commande. Pour la commande utilisée au dessus comme exemple la rake serait: 
 `heroku run rake fulfill_blocked_orders\['BD1048']`
 :::
