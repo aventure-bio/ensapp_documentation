@@ -104,7 +104,7 @@ Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concern�
 - si le CRP était erroné, modifier le CRP avec les bonnes informations (validées par l'équipe Business) et redéposer le fichier corrigé sur le serveur SFTP avec une copie vide de ce fichier ayant l'extension .bal (ex: 'CRP...0001.dat' + 'CRP...0001.bal')
 - si les quantités ont été supprimées à tord dans Shopify, voir si l'équipe Business peut les rajouter manuellement à la commande Shopify et relancer le traitement du CRP (comme indiqué au dessus) en modifiant ses données si besoin
 
-#### ERREUR "Le traitement de la commande XXXX ne s'est pas fait correctement"
+#### ERREUR "Fulfilled quantity for line item 'XXXX' must be less than or equal to the fulfillable line item quantity X"
 
 :question: Problème : Parfois le CRP envoyé peut diviser une ligne de la commande en deux lignes dans le CRP ce qui cause un problème.
 
