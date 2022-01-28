@@ -110,3 +110,10 @@ Aller en console et saisir les lignes suivantes :
   ShopifyToMagistor::ProductsJob.perform_now(shop.id, true)
 ```
 :::
+
+::: details * Infos pour les développeurs - lancer ENSAPP en local
+  - faire `ngrok http -subdomain=ensovapp 5000` (dans un premier onglet)
+  - faire `rails s -p 5000` (dans un deuxième onglet)
+  - aller sur "https://ensovapp.ngrok.io"
+  - saisir le nom de domaine du shop dans l'interface
+:::
