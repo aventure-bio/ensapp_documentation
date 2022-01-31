@@ -14,7 +14,7 @@ Si la commande est bien créée dans Ensapp, elle peut être trouvée en console
 
 :question: Problème : Shopify a transmis à Ensapp des données manquantes
 
-:heavy_check_mark: Solution : 
+:heavy_check_mark: Solution :
 - si dans les minutes qui suivent, la commande a bien été créée correctement dans Ensapp, le problème s'est résolu "de lui même" (Shopify a regénéré correctement la transmission d'information)
 - si le probleme persiste avec de nouveaux messages d'erreur et que la commande ne parvient à se créer dans Ensapp :
   - investiguer la commande créée dans Shopify pour s'assurer qu'elle n'est pas d'anomalie
@@ -24,7 +24,7 @@ Si la commande est bien créée dans Ensapp, elle peut être trouvée en console
 
 :question: Problème : Shopify a transmis à Ensapp des données manquantes => anomalie de fonctionnement de Shopify
 
-:heavy_check_mark: Solution : 
+:heavy_check_mark: Solution :
 - dans les minutes qui suivent, la commande devrait s'être créée correctement dans Ensapp. Le problème s'est résolu "de lui même" (Shopify a regénéré correctement la transmission d'information)
 
 
@@ -52,7 +52,7 @@ Pour qu'une commande soit traitée comme expédiée dans Ensapp, lancer la tache
 
 :question: Problème : une anomalie a eu lieu pendant le traitement des lignes du CRP par Ensapp
 
-:heavy_check_mark: Solution : 
+:heavy_check_mark: Solution :
 
 - si dans les minutes qui suivent, les informations du CRP ont bien été transmises à Shopify MAIS la commande reste "*sent_to_magistor*" dans Ensapp, traiter manuellement la commande (*[infos pour les développeurs](https://documentation-ensapp.netlify.app/ensapp/errors.html#expedition-traitement-de-la-commande-via-crp)*) et ajouter la balise/tag "*ensovo_fulfilled*" dans Shopify
 - si le probleme persiste avec de nouveaux messages d'erreur et qu'aucune information n'est transmise à Shopify, investiguer le CRP reçu
@@ -61,7 +61,7 @@ Pour qu'une commande soit traitée comme expédiée dans Ensapp, lancer la tache
 
 :question: Problème : le lien de suivi n'est pas présent ou le mode de livraison n'est pas connu pour ce magasin
 
-:heavy_check_mark: Solution : 
+:heavy_check_mark: Solution :
 
 - vérifier si le CRP contient un numéro de suivi (correpond à l'avant dernière série de chiffres)
 - vérifier si le magasin a bien ce mode de livraison rattaché
@@ -78,12 +78,33 @@ shipping_method = ShippingMethod.create(name: ...., code: ...., ...)
 shop.shipping_methods << shipping_method # ajouter le mode de livraison au magasin
 ```
 :::
+Où se trouve le code de livraison dans le CRP ?
+![](/images/delivery_code.png)
+::: details Infos pour les développeurs - Listes code livraison
+Voici une liste non exaustive des code en vigueur au 31-01-22
+- AB_DPD
+- AB_GEODIS
+- AB_RETRAIT
+- ABIO_MR
+- PAOSB_CLSM_AS
+- PAOSB_DPD
+- Retrait_Site
+- PAOSC_CLSM_SS
+- PAOSC_MR
+- AB_DBSCHENKER
+- PAOSC_CLSM_AS
+- COLISSIMO_ABIO
+- AB_STEF
+- COLISSIMO_AS
+- MR
+- CHRONOPOST
 
+:::
 #### ERREUR "Line item '103XXXXX' is already fulfilled"
 
 :question: Problème : la quantité indiquée comme expédiée par Ensovo ne correspont pas avec la quantité à traiter dans Shopify
 
-:heavy_check_mark: Solution : 
+:heavy_check_mark: Solution :
 
 - vérifier les quantités à traiter dans Shopify (dans les articles "à traiter" et "supprimés")
 - investiguer le CRP reçu et les quantités indiquées comme expédiées par Ensovo
@@ -108,7 +129,7 @@ Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concern�
 
 :question: Problème :  Lorsqu'une commande a plusieurs prix différents pour la même référence produit (ex: SKU 1234 au prix de 2,5 euros + SKU 1234 gratuit/offert), Shopify va créer la commande avec 2 articles différents pour le même SKU. Ensapp gère pour le moment mal ce cas de figure lors du traitement de l'expédition.
 
-:heavy_check_mark: Solution : 
+:heavy_check_mark: Solution :
 
 - Première chose à faire est de vérifier dans la DB si la commande à bien le statut `sent_to_magistor`
 - Deuxième chose à faire est de controller si les infos du CRP sont correctes. Il faut donc ouvrir le CRP en pièce jointe du mail et ouvrir la commande sur shopify. En suite il faut comparer les quantités.
@@ -122,6 +143,6 @@ Faire une recherche via `CTRL` + `F` pour trouver dans le CRP l'article concern�
 - Toujours sur Shopify ajouter le tag `ensovo_fulfilled` sur la commande
 
 ::: details Infos pour les développeurs - Lancer rake task
-Lancer la rake task `heroku run rake fulfill_blocked_orders\['AXXXX']` en console. AXXXX etant le numéro de la commande. Pour la commande utilisée au dessus comme exemple la rake serait: 
+Lancer la rake task `heroku run rake fulfill_blocked_orders\['AXXXX']` en console. AXXXX etant le numéro de la commande. Pour la commande utilisée au dessus comme exemple la rake serait:
 `heroku run rake fulfill_blocked_orders\['BD1048']`
 :::
