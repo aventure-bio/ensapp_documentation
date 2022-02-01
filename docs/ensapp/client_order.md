@@ -2,7 +2,7 @@
 
 ## Import des commandes Shopify dans Ensapp
 
-La récupération des commandes s'effectue grâce à la tache `shopify_to_magistor:import_orders_from_shopify` qui tourne **TOUTES LES 10 MINUTES**. 
+La récupération des commandes s'effectue grâce à la tache `shopify_to_magistor:import_orders_from_shopify` qui tourne **TOUTES LES 10 MINUTES**.
 
 ### Création d'une commande
 
@@ -73,14 +73,14 @@ Un magasin ne peut pas cocher l'option _Envoyer automatiquement les commandes à
 :::
 
 En pratique, c'est la même tâche `shopify_to_magistor:transmit_orders_to_magistor` qui est déclenchée automatiquement toutes les 10 minutes mais, dans ce cas, elle vérifie en amont si :
-- l'heure actuelle (au moment où tourne la tache) est postérieure au créneau horaire choisi pour le magasin 
+- l'heure actuelle (au moment où tourne la tache) est postérieure au créneau horaire choisi pour le magasin
 - le déclenchement n'a pas encore été fait pour le créneau horaires en question.
 Dans ce cas où ces deux conditions sont vraies, les commandes sont transmises à Magistor. Et ainsi de suite pour tous les créneaux horaires choisis.
 
 Le magasin peut ajouter autant de créneaux horaires qu'il le souhaite.
 
-::: details Infos pour les développeurs 
-Côté base de données, la relation entre la table `shops` et la table `order_sync_times` est une relation N:1. 
+::: details Infos pour les développeurs
+Côté base de données, la relation entre la table `shops` et la table `order_sync_times` est une relation N:1.
 Un magasin peut avoir *N* heures de synchronisation mais une heure de synchronisation peut seulement appartenir à un magasin.
 
 Pour savoir si la synchronisation a déjà eu lieu pour un créneau horaire choisi, on utilise une troisième table `order_sync_time_sent_dates` qui conserve la **date** de la synchronisation.
@@ -119,7 +119,7 @@ Ceux **utilisant les CRE** sont :
 
 *historiquement, le magasin Aventure Bio a été géré en CRP pour permettre d’avoir le détail des produits traités dans chaque commande et être au plus près des stocks réels (en quasi temps réel). Le fait que les D2C classiques (hors MVSG) gèrent leur stock à travers Aventure Bio, les équipes ont choisit de mettre les D2C aussi en CRP pour permettre de calculer correctement les stocks en temps réel.
 
-### CRE 
+### CRE
 
 Au niveau d'Ensapp :
 - pour chaque article, sa quantité traitée (`fulfilled_quantity`) devient égale à sa quantité initiale (`quantity`)
@@ -151,8 +151,8 @@ Au niveau de Shopify :
 
 ::: warning Attention
   Si le fichier CRP ou CRE est incomplet (numéro de commande ou l'url de tracking manquants), la commande ne pourra pas être traitée par Ensapp.
-  
-  Un email d'erreur sera transmis aux destinataires support du magasin pour signaler l'anomalie. 
-  
+
+  Un email d'erreur sera transmis aux destinataires support du magasin pour signaler l'anomalie.
+
   Le CRP ou CRE corrigé devra ensuite être redéposé sur le serveur SFTP avec une copie vide de ce fichier ayant l'extension `.bal` (ex: 'CRP...0001.dat' + 'CRP...0001.bal').
 :::
