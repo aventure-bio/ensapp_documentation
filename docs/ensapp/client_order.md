@@ -2,7 +2,7 @@
 
 ## Import des commandes Shopify dans Ensapp
 
-La récupération des commandes s'effectue grâce à la tache `shopify_to_magistor:import_orders_from_shopify` qui tourne **TOUTES LES 10 MINUTES**.
+La récupération des commandes s'effectue grâce à la tache ?`shopify_to_magistor:import_orders_from_shopify` qui tourne **TOUTES LES 10 MINUTES**.
 
 ### Création d'une commande
 
