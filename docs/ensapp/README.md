@@ -1,5 +1,5 @@
 # Contexte
-## Elodie 
+## Elodie ?
 
 L'application ENSAPP a pour but de **connecter des boutiques Shopify et Magistor** (WMS d'Ensovo).
 
