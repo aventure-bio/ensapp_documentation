@@ -65,3 +65,15 @@ Si le fichier inséré est au bon format et qu'il provient d'un magasin ayant ac
 
 La nouvelle commande / attendu de réception envoyé(e) sera maintenant visible dans l'historique des commandes fournisseurs déjà transmises (voir image ci-dessus).
 :::
+
+## Annuler la transmission des attendus de réception d'achats
+
+Une fois qu'un attendu de réception d'achats a été chargé dans l'interface d'Ensapp, la transmission se fait de manière automatique et directe vers Magistor. **Il n'est donc pas possible d'annuler cette transmission de manière automatisée.** 
+
+Cette annulation peut tout de même être gérée manuellement de la manière suivante :
+- l'équipe Business AB informe les équipes d'Ensovo afin qu'ils ne tiennent pas compte du fichier reçu
+- l'équipe Tech AB supprime l'attendu de réception dans Ensapp (pour qu'il n'apparaisse plus dans l'historique des transmissions)
+
+::: details Infos pour les développeurs - Supprimer un attendu de réception d'achats
+`PurchaseOrder.find_by_name('NUMEROATTENDU').destroy!`
+:::
