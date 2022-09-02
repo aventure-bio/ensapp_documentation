@@ -63,7 +63,7 @@ Pour ces magasins D2C, les flux d'information sur la gestion des commandes sont 
 > - Automatically send orders to magistor: `true`
 > - Email de support technique pour transmission des erreurs: `tech@aventure.bio`
 > - Email de support technique secondaire: `slf@aventure.bio`
-> - Email de support technique tertiaire: `bonjour@aventure.bio`
+> - Email de support technique tertiaire: **Demander l'email à l'équipe Business AB + Faire autorisation Postmark si besoin**
 > - Email de support client: **Demander l'email à l'équipe Business AB + Faire autorisation Postmark si besoin**
 > - Envoyer les produits à Magistor: `false`
 > - Envoyer les commandes à Magistor: `true`
