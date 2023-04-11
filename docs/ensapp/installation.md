@@ -80,7 +80,7 @@ Pour ces magasins D2C, les flux d'information sur la gestion des commandes sont 
 
 
 > Informations pricipales
-> - Code Entreprise: `ABIO`
+> - Code Entreprise: `ABIO`,
 > - Nom de la Boutique: `Nom du magasin`
 > - Code du site: `EN1`
 > - IP du serveur: `79.81.205.149`
