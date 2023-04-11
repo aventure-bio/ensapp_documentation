@@ -2,10 +2,37 @@
 
 ## Magasin classique
 
-1) Se rendre sur [https://shopify-magistor-connector.herokuapp.com/](https://shopify-magistor-connector.herokuapp.com/)
-2) Saisir l'url du magasin Shopify et s'y connecter. Vous serez redirigés vers votre espace administrateur
-3) Cliquer sur _Mon magasin_ (en haut à droite) et puis sur _Modifier_
-4) Remplir les informations demandées :
+1) Depuis la mise à jour Shopify (2022-10) nous avons modifier le format de l'application ENSAPP dans shopify. Il faut obligatoirement créer une application custom dans le shopify en question, voici un [lien](https://www.notion.so/aventurebio/Comment-cr-er-un-app-personnalis-e-dans-Shopify-custom-app-320adba13a0f48ed99d0e80323c3e6e5) pour créer l'appication.
+Voici la liste des autorisation à ajouter a l'application custom:
+- write_products,
+- read_proucts,
+- write_orders,
+- read_orders,
+- read_locations,
+- write_location,
+- write_inventory,
+- read_inventory,
+- write_fulfillments,
+- read_fulfillments,
+- write_assigned_fulfillment_orders,
+- read_assigned_fulfillment_orders
+- write_merchant_managed_fulfillment_orders,
+- read_merchant_managed_fulfillment_orders,
+- write_third_party_fulfillment_orders
+- read_third_party_fulfillment_orders
+
+2) Un développeur devra vous créer le `shop` avec les clès générés via l'application custom `(Clé API, Mot de passe API, Jeton)` dans ENSAPP et y rattacher un `user` pour pouvoir vous connecter à ENSAPP via ce user.
+::: details * Infos pour les développeurs - Créer un shop et le rattacher à un `user`
+  - faire `shop = Shop.create(shopify_domain: 'XX', shopify_api_key: 'XX', shopify_api_password: 'XX', shopify_token: 'XX')`
+  - faire `user = User.new(email: "XX", password: "XX")`
+  - faire `user.shops << shop`
+  - faire `user.save`
+:::
+
+3) Se rendre sur [https://shopify-magistor-connector.herokuapp.com/](https://shopify-magistor-connector.herokuapp.com/)
+4) Se connecter avec l'utilisateur associé au magasin désiré.
+5) Cliquer sur _Mon magasin_ (en haut à droite) et puis sur _Modifier_
+6) Remplir les informations demandées :
 - code entreprise
 - code du site
 - IP du serveur
@@ -13,7 +40,7 @@
 - mot de passe pour le serveur
 - heures de synchronisation des produits et des commandes
 - email de support et email de support secondaire
-- méthodes de livraison pour chacune des méthodes de livraison de Shopify. 
+- méthodes de livraison pour chacune des méthodes de livraison de Shopify.
 
 ::: warning Méthodes de livraison
 **Le nom doit être le même que la dénomination sur Shopify** et le code est généré par Magistor.
@@ -21,12 +48,12 @@
 
 ## Aventure Bio (magasin D2C)
 
-Aventure Bio a des besoins spécifiques concernant la gestion de ses magasins D2C (Direct to Consumer) et nécessite une configuration particulière. 
-Exemple des magasins D2C : 
+Aventure Bio a des besoins spécifiques concernant la gestion de ses magasins D2C (Direct to Consumer) et nécessite une configuration particulière.
+Exemple des magasins D2C :
 - [Dagobert](https://dagobert.shop/)
 - [Emma Noël](https://emmanoel.bio/)
 - [Emile Noël](https://emilenoel.bio/)
-- [Bio Demain](https://biodemain.shop/). 
+- [Bio Demain](https://biodemain.shop/).
 
 Pour ces magasins D2C, les flux d'information sur la gestion des commandes sont différents de ceux liés à la gestion des produits (stock).
 
@@ -40,10 +67,10 @@ Pour ces magasins D2C, les flux d'information sur la gestion des commandes sont 
 - l'inventaire quotidien des stocks est reçu via le magasin Aventure Bio (stock produits Aventure Bio + D2C) => transite via Shopify Aventure Bio (puis Syncio)
 - le calcul de retraitement des stocks (stocks réels - commandes en attente) tient compte des commandes d'Aventure Bio + commandes sur les magasins D2C.
 
-### Confuguration
+### Configuration
 
 1) Se rendre sur [https://shopify-magistor-connector.herokuapp.com/](https://shopify-magistor-connector.herokuapp.com/)
-2) Saisir l'url du magasin Shopify et s'y connecter. Vous serez redirigés vers votre espace administrateur.
+2) Se connecter avec l'utilisateur associé au magasin désiré.
 3) Cliquer sur _Mon magasin_ (en haut à droite) et puis sur _Modifier_
 4) Remplir toutes les informations demandées de la manière suivante :
 
@@ -53,7 +80,7 @@ Pour ces magasins D2C, les flux d'information sur la gestion des commandes sont 
 
 
 > Informations pricipales
-> - Code Entreprise: `ABIO`
+> - Code Entreprise: `ABIO`,
 > - Nom de la Boutique: `Nom du magasin`
 > - Code du site: `EN1`
 > - IP du serveur: `79.81.205.149`
