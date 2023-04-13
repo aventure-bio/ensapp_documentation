@@ -27,12 +27,43 @@ Voici la liste des autorisation à ajouter a l'application custom:
   - faire `user = User.new(email: "XX", password: "XX")`
   - faire `user.shops << shop`
   - faire `user.save`
+
+  ___IMPORTANT___ il faut absulment renseigner dans `lastpast` les clés générées et les utilisateurs lié au shop pour pouvoir s'y connecter !
+:::
+3) Pour le bon fonctionnement du shop il faut également ajouter les webhooks pour recevoir les informations de shopify. Nous avons besoin d'écouter la liste suivants pour que l'application focntionne a 100%.
+
+> __Liste des webhooks:__
+>
+> orders/create, orders/updated, orders/cancelled, products/create, products/update, products/delete, inventory_items/create, inventory_items/update
+
+::: details * Infos pour les développeurs - Créer les webhooks pour un `shop`
+  ```rb
+  shop = Shop.find(XX)
+  shop.activate_session
+  # vérifier la liste de webhook
+  ShopifyAPI::Webhook.all.map(&:address)
+
+  # créer les webhooks
+  topics = %w[orders/create orders/updated orders/cancelled products/create products/update products/delete inventory_items/create inventory_items/update]
+  topics.each do |topic|
+    ShopifyAPI::Webhook.create!(topic: topic, address: "https://shopify-magistor-connector.herokuapp.com/webhooks/#{topic.gsub('/', '_')}", format: 'json')
+  end
+
+  # vérifier la liste de webhook
+  ShopifyAPI::Webhook.all.map(&:address)
+
+  ```
+
+  - Pour faire des tests il est possible de créer des webhooks avec l'adresse de `ngrok` à la place de `https://shopify-magistor-connector.herokuapp.com/webhooks/`
+
+  - une task existe, elle tourne tout les jours pour créer d'éventuelle webhook qui aurait pu etre supprimer par shopify, taks `rake generate_webhooks`
+
 :::
 
-3) Se rendre sur [https://shopify-magistor-connector.herokuapp.com/](https://shopify-magistor-connector.herokuapp.com/)
-4) Se connecter avec l'utilisateur associé au magasin désiré.
-5) Cliquer sur _Mon magasin_ (en haut à droite) et puis sur _Modifier_
-6) Remplir les informations demandées :
+4) Se rendre sur [https://shopify-magistor-connector.herokuapp.com/](https://shopify-magistor-connector.herokuapp.com/)
+5) Se connecter avec l'utilisateur associé au magasin désiré.
+6) Cliquer sur _Mon magasin_ (en haut à droite) et puis sur _Modifier_
+7) Remplir les informations demandées :
 - code entreprise
 - code du site
 - IP du serveur
@@ -142,5 +173,5 @@ Aller en console et saisir les lignes suivantes :
   - faire `ngrok http -subdomain=ensovapp 5000` (dans un premier onglet)
   - faire `rails s -p 5000` (dans un deuxième onglet)
   - aller sur "https://ensovapp.ngrok.io"
-  - saisir le nom de domaine du shop dans l'interface
+  - se connecter au shop désiré via l'utilisateur correspondant.
 :::
