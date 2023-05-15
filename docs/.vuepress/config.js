@@ -12,6 +12,7 @@ module.exports = {
         '',
         'installation',
         'database',
+        'api',
         'product',
         'client_order',
         'supplier_order',
