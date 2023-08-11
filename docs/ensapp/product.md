@@ -48,5 +48,9 @@ Si le stock final est différent du stock calculé par Shopify**, ce dernier est
 Pour le calcul des stock lié au commandes non traité nous allons prendre en considération les `unfulfilled_quantity` des line_items qui sont liés à des commandes non traités par ensovo.
 Pour ENSAPP les commandes avec le status `initial` et `sent_to_magistor` et pour le HUB les commandes avec le statut `unfulfilled` et `transmit_to_logistician`.
 
+Attention, il faut faire attention à la remontée des stocks.
+Nous avons actuellement une remontée de stock à 12h et une autre à 17h.
+Cela est problématique car cela crée actuellement un décalage dans les stocks. La raison ENSOVO nous envoie des stocks de commande traité chez eux hors elles ne sont pas considérées comme non traitées dans ENSAPP donc cela prend en compte les stocks (unfulfilled_quantity). Nous sommes donc en train de demander à ENSOVO d'annuler cette première remonter de stock pour uniquement faire des remontées de stock uniquement quand les commandes sont traitées dans ENSAPP.
+
 **dans le cas où Ensovo a réceptionné une commande dans la journée ou a supprimé des produits expirés
 
