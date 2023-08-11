@@ -40,9 +40,13 @@ Le stock est calculé de la manière suivante pour chaque produit / variant :
 
 **stock final = stock réel indiqué par Magistor - stock déjà vendus (commandes non traitées)***
 
+
+
 Si le stock final est différent du stock calculé par Shopify**, ce dernier est mis à jour dans Shopify avec le montant du stock final.
 
 *pour Aventure Bio, le stock déjà vendus tient compte des commandes en attentes dans le magasin Shopify Aventure Bio + les magasins D2C concernés par le produit. Si le D2C en question n'est pas sur ENSAPP mais sur le HUB (ex: Piques Assiette) un call API est générer entre les deux apps. Pour plus d'information sur ce call API voici le lien (page en cours de construction).
+Pour le calcul des stock lié au commandes non traité nous allons prendre en considération les `unfulfilled_quantity` des line_items qui sont liés à des commandes non traités par ensovo.
+Pour ENSAPP les commandes avec le status `initial` et `sent_to_magistor` et pour le HUB les commandes avec le statut `unfulfilled` et `transmit_to_logistician`.
 
 **dans le cas où Ensovo a réceptionné une commande dans la journée ou a supprimé des produits expirés
 
