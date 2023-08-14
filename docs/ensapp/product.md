@@ -50,7 +50,8 @@ Pour ENSAPP les commandes avec le status `initial` et `sent_to_magistor` et pour
 
 Attention, il faut faire attention à la remontée des stocks.
 Nous avons actuellement une remontée de stock à 12h et une autre à 17h.
-Cela est problématique car cela crée actuellement un décalage dans les stocks. La raison ENSOVO nous envoie des stocks de commande traité chez eux hors elles ne sont pas considérées comme non traitées dans ENSAPP donc cela prend en compte les stocks (unfulfilled_quantity). Nous sommes donc en train de demander à ENSOVO d'annuler cette première remonter de stock pour uniquement faire des remontées de stock uniquement quand les commandes sont traitées dans ENSAPP.
+Cela est problématique car cela crée actuellement un décalage dans les stocks. La raison, ENSOVO nous envoie des stocks de commande traité chez eux hors elles ne sont pas considérées comme traitées dans ENSAPP, les stocks en attente (commande non traitée) sont donc a nouveau prids en compte dans le calcul des stocks (unfulfilled_quantity).
+Nous sommes donc en train de demander à ENSOVO d'annuler cette première remonter de stock pour uniquement faire des remontées de stock uniquement quand les commandes sont traitées dans ENSAPP.
 
 **dans le cas où Ensovo a réceptionné une commande dans la journée ou a supprimé des produits expirés
 
